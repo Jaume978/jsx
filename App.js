@@ -7,13 +7,11 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
 } from 'react-native';
@@ -25,11 +23,13 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import { TextInput, Button, Text, HelperText } from 'react-native-paper';
 import {Provider as PaperProvider} from 'react-native-paper';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
-const Section = ({children, title}): Node => {
+const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -55,16 +55,65 @@ const Section = ({children, title}): Node => {
   );
 };
 
-const App: () => Node = () => {
+const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const [text, setText] = React.useState("");
+  const onChangeText = text => setText(text);
+
+  const [text2, setText2] = React.useState("");
+  const onChangeText2 = text2 => setText2(text2);
+
+  const validarCorreu = () => {
+    return (text.search(/^[a-zA-Z]+\@[a-zA-Z\_\-0-9]+\.[a-z]{2,5}$/));
+  }
+
+  const validarTelefon = () => {
+    return (text2.search(/(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/));
+  }
+
+  let re = (/(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/);
+
+  function validar(numero) {
+    let correcto = re.exec(numero);
+    if (!correcto) {
+      console.error("este telefon no es valid.");
+    } else {
+      console.error('Gracias, tu número de teléfono es ' + correcto[0]);
+    }
+  }
+  
+  const EntradaDEmail = () => {
+    return (
+      <View>
+        <TextInput label="Email:" value={text} keyboardType="email-address" onChangeText={onChangeText}/>
+        <HelperText type="error" visible={validarCorreu()}>
+          Correu incorrecte!
+        </HelperText>
+      </View>
+    )
+  }
+
+  const EntradaDTelefon = () => {
+    return (
+      <View>
+        <TextInput label="Telèfon:" value={text2} keyboardType="phone-pad" onChangeText={onChangeText2}/>
+        <HelperText type="error" visible={validarTelefon()}>
+          Telèfon incorrecte!
+        </HelperText>
+      </View>
+    )
+  }
+
   return (
     <PaperProvider>
       {nom('Jaume Mir')}
+      {EntradaDEmail()}
+      {EntradaDTelefon()}
     </PaperProvider>
   );
 };
