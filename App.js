@@ -69,17 +69,18 @@ const App = () => {
   const onChangeText2 = text2 => setText2(text2);
 
   const validarCorreu = () => {
-    return (text.search(/^[a-zA-Z]+\@[a-zA-Z\_\-0-9]+\.[a-z]{2,5}$/));
+    return (text.search(/^[a-zA-Z0-9]+\@[a-zA-Z\_\-0-9]+\.[a-z]{2,5}$/));
   }
 
   const validarTelefon = () => {
-    return (text2.search(/^[09][0-9]{1,7}$/));
+    return (text2.search(/^[0-9]{9}$/));
   }
   
   const EntradaDEmail = () => {
     return (
       <View>
-        <TextInput label="Email:" value={text} keyboardType="email-address" onChangeText={onChangeText}/>
+        <TextInput label="Email:" value={text} keyboardType="email-address"
+        onChangeText={onChangeText} right={<TextInput.Icon icon="check" visible={validarCorreu()}/>}/>
         <HelperText type="error" visible={validarCorreu()}>
           Correu incorrecte!
         </HelperText>
@@ -90,7 +91,8 @@ const App = () => {
   const EntradaDTelefon = () => {
     return (
       <View>
-        <TextInput label="Telèfon:" value={text2} keyboardType="phone-pad" onChangeText={onChangeText2}/>
+        <TextInput label="Telèfon:" value={text2} keyboardType="phone-pad"
+        onChangeText={onChangeText2} right={<TextInput.Icon icon="check" visible={validarTelefon()}/>}/>
         <HelperText type="error" visible={validarTelefon()}>
           Telèfon incorrecte!
         </HelperText>
