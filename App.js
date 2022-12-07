@@ -73,18 +73,7 @@ const App = () => {
   }
 
   const validarTelefon = () => {
-    return (text2.search(/(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/));
-  }
-
-  let re = (/(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/);
-
-  function validar(numero) {
-    let correcto = re.exec(numero);
-    if (!correcto) {
-      console.error("este telefon no es valid.");
-    } else {
-      console.error('Gracias, tu número de teléfono es ' + correcto[0]);
-    }
+    return (text2.search(/^[09][0-9]{1,7}$/));
   }
   
   const EntradaDEmail = () => {
